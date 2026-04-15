@@ -19,23 +19,24 @@ pipeline {
             }
             steps {
                 script {
-                    sh "git fetch origin dev"
 
-                    def changedFiles = sh(
-                        script: "git diff --name-only origin/dev...HEAD",
-                        returnStdout: true
-                    ).trim().split("\n")
+            sh "git fetch origin +refs/heads/*:refs/remotes/origin/*"
 
-                    echo "Archivos cambiados:"
-                    changedFiles.each { echo it }
+            def changedFiles = sh(
+                script: "git diff --name-only origin/${env.CHANGE_TARGET}...HEAD",
+                returnStdout: true
+            ).trim().split("\n")
 
-                    def services = ["incidente","inventario","monitoreo"]
+            echo "Archivos cambiados:"
+            changedFiles.each { echo it }
 
-                    def affected = services.findAll { service ->
-                        changedFiles.any { it.startsWith(service + "/") }
-                    }
+            def services = ["incidente","inventario","monitoreo"]
 
-                    echo "Servicios afectados: ${affected}"
+            def affected = services.findAll { service ->
+                changedFiles.any { it.startsWith(service + "/") }
+            }
+
+            echo "Servicios afectados: ${affected}"
                 }
             }
         }
