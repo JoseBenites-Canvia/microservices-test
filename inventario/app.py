@@ -1,1 +1,1 @@
-print("Servicio inventario funcionando")
+print("Servicio inventario funcionando - prueba1")
