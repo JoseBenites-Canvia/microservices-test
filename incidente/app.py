@@ -1,2 +1,2 @@
-print("Servicio incidente prueba de multibranch detecte microservicio")
+print("Servicio incidente prueba de multibranch detecte")
 
